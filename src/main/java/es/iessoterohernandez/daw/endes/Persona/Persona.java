@@ -134,6 +134,7 @@ public class Persona {
      *
      * @param nombre a cambiar
      */
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
