@@ -14,76 +14,41 @@ public class PersonaTest {
         // Configurar el objeto Persona antes de cada prueba
         // Inicializar el objeto Persona con valores específicos utilizando un constructor
         persona = new Persona("Juan", 30, 'H', 75, 1.75);
-        System.out.println("inicio");
+        //System.out.println("inicio");
     }
     
     @AfterEach
     public void finish() {
         persona = null;
-        System.out.println("finish");
+        //System.out.println("finish");
     }
 
     @Test
-    public void calcularIMC_PesoIdeal() {
-        // Prueba para calcular el IMC cuando el peso está en el rango ideal
-        // Act: Llamar al método calcularIMC() en el objeto Persona
-        int resultado = persona.calcularIMC();
+    public void calcularIMC() {
+        // Prueba para calcular el IMC en diferentes situaciones de peso
+        // Testeamos el peso ideal
+        assertEquals(Persona.PESO_IDEAL, persona.calcularIMC());
 
-        // Assert: Verificar que el resultado devuelto sea igual al valor esperado para peso ideal
-        assertEquals(Persona.PESO_IDEAL, resultado);
-    }
-
-    @Test
-    public void calcularIMC_Infrapeso() {
-        // Prueba para calcular el IMC cuando el peso está por debajo del rango ideal
-        // Arrange: Configurar el peso y altura específicos para este caso
+        // Testeamos el infrapeso
         persona.setPeso(45);
         persona.setAltura(1.60);
+        assertEquals(Persona.INFRAPESO, persona.calcularIMC());
 
-        // Act: Llamar al método calcularIMC() en el objeto Persona
-        int resultado = persona.calcularIMC();
-
-        // Assert: Verificar que el resultado devuelto sea igual al valor esperado para infrapeso
-        assertEquals(Persona.INFRAPESO, resultado);
-    }
-
-    @Test
-    public void calcularIMC_Sobrepeso() {
-        // Prueba para calcular el IMC cuando el peso está por encima del rango ideal
-        // Arrange: Configurar el peso y altura específicos para este caso
+        // Testeamos el sobrepeso
         persona.setPeso(90);
         persona.setAltura(1.80);
-
-        // Act: Llamar al método calcularIMC() en el objeto Persona
-        int resultado = persona.calcularIMC();
-
-        // Assert: Verificar que el resultado devuelto sea igual al valor esperado para sobrepeso
-        assertEquals(Persona.SOBREPESO, resultado);
+        assertEquals(Persona.SOBREPESO, persona.calcularIMC());
     }
 
     @Test
-    public void esMayorDeEdad_Menor() {
-        // Prueba para determinar si una persona es menor de edad
-        // Arrange: Configurar la edad específica para este caso
-        persona.setEdad(15);
+    public void esMayorDeEdad() {
+    	// Testeamos una persona mayor de edad
+        assertTrue(persona.esMayorDeEdad());
+        
+        // Testeamos una persona menor de edad
+        persona.setEdad(17);
+        assertFalse(persona.esMayorDeEdad());
 
-        // Act: Llamar al método esMayorDeEdad() en el objeto Persona
-        boolean resultado = persona.esMayorDeEdad();
-
-        // Assert: Verificar que el resultado devuelto sea falso, ya que la persona es menor de edad
-        assertFalse(resultado);
-    }
-
-    @Test
-    public void esMayorDeEdad_Mayor() {
-        // Prueba para determinar si una persona es mayor de edad
-        // Arrange: Configurar la edad específica para este caso
-        persona.setEdad(25);
-
-        // Act: Llamar al método esMayorDeEdad() en el objeto Persona
-        boolean resultado = persona.esMayorDeEdad();
-
-        // Assert: Verificar que el resultado devuelto sea verdadero, ya que la persona es mayor de edad
-        assertTrue(resultado);
+        
     }
 }
